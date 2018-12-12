@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title></title>
+<style>
+*{margin:0px;}
+#stage{
+	width:100%;
+	height:600px;
+	background:yellow;
+}
+</style>
+<script src="./common.js"></script>
+<script src="./ObjectManager.js"></script>
+<script src="./GameObject.js"></script>
+<script src="./Sensor.js"></script>
+<script src="./Block.js"></script>
+<script src="./Hero.js"></script>
+<script src="./frames.js"></script>
+<script>
+var stage;
+var hero;
+var objectManager;
+var key;
+
+function init(){
+	stage=document.getElementById("stage");
+	objectManager=new ObjectManager();
+	createBlock();
+	createHero();
+	gameLoop();
+}
+function createBlock(){
+	var block=new Block("BLOCK", stage, 900,100,150,150,0,0,"blue","");
+	objectManager.addObject(block);
+}
+function createHero(){
+	hero = new Hero("HERO",stage,100,100,232,439,0,0,"","./images/ninja/"+frames.idle[0]);		
+	objectManager.addObject(hero);//등록
+}
+
+function gameLoop(){
+	objectManager.tick();
+	objectManager.render();
+	setTimeout("gameLoop()",10);
+}
+
+addEventListener("load", function(){
+	init();
+
+	addEventListener("keydown",function(){
+		key=event.keyCode;
+		console.log(key);
+	});
+	addEventListener("keyup",function(){
+		key=0;
+	});
+
+});
+
+</script>
+</head>
+<body>
+	<div id="stage"></div>
+</body>
+</html>
